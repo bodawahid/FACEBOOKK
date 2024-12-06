@@ -16,6 +16,12 @@
     <link rel="stylesheet" href="{{ asset('css/emoji.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/lightbox.css') }}">
+    <script>
+        window.appConfig = {
+            userId: {{ Auth::id() }},
+            csrfToken: '{{ csrf_token() }}'
+        };
+    </script>
     @vite(['resources/js/facebookApp.js'])
 </head>
 

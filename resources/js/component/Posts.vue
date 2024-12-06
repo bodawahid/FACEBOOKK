@@ -19,14 +19,15 @@ import EditPost from "./EditPost.vue";
 import axios from "axios";
 export default {
     components: {
-        "CreatePost": CreatePost,
-        "PostContent": PostContent,
-        "FollowPeople": FollowPeople,
-        "Loading": Loading,
-        "CreatePostModal": CreatePostModal,
-        "Spinner": Spinner,
-        "EditPost": EditPost,
-    }, data() {
+        CreatePost: CreatePost,
+        PostContent: PostContent,
+        FollowPeople: FollowPeople,
+        Loading: Loading,
+        CreatePostModal: CreatePostModal,
+        Spinner: Spinner,
+        EditPost: EditPost,
+    },
+    data() {
         return {
             mediaFiles: [],
             isModalVisible: false,
@@ -34,22 +35,17 @@ export default {
             post: null,
             isEditModalVisisble: false,
             current_editing_index: null,
-        }
-
-
+        };
     },
     mounted() {
-        if (!this.$root.user) {
-            axios.get(`api/current/user/${this.$root.userId}/profile/data`).then((response) => {
-                this.$root.user = response.data.user;
-            }).catch((error) => { })
-        }
-        axios.get('api/retrieve/data').then((response) => {
-            console.log(response.data.posts);
-            // console.log(response.data.user);
-            this.$root.current_posts = response.data.posts;
-        }).catch((error) => { });
-
-    }
-}
+        axios
+            .get("api/retrieve/data")
+            .then((response) => {
+                console.log(response.data.posts);
+                // console.log(response.data.user);
+                this.$root.current_posts = response.data.posts;
+            })
+            .catch((error) => {});
+    },
+};
 </script>
