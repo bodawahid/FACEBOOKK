@@ -22,7 +22,17 @@ export default {
 
     }, methods: {
 
-    },
+    }, beforeMount() {
+        if (!this.$root.user) {
+            axios.defaults.baseURL = 'http://127.0.0.1:8000/';
+            axios.get('api/current/user/profile/data').then((response) => {
+                this.$root.user = response.data.user;
+                console.log('hello from header') ;
+                console.log(this.$root.user[0].name); 
+            }).catch((error) => { })
+            console.log(this.$root.userId);
+        }
+    }
 
 
 }

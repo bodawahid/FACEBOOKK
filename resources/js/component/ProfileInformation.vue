@@ -7,7 +7,7 @@
                 <figure class="avatar position-absolute w100 z-index-1" style="top:-40px; left: 30px;"><img
                         src="images/user-12.png" alt="image" class="float-right p-1 bg-white rounded-circle w-100">
                 </figure>
-                <h4 class="fw-700 font-sm mt-2 mb-lg-5 mb-4 pl-15">Mohannad Zitoun <span
+                <h4 class="fw-700 font-sm mt-2 mb-lg-5 mb-4 pl-15">{{ $root.user[0].name }} <span
                         class="fw-500 font-xssss text-grey-500 mt-1 mb-3 d-block">support@gmail.com</span>
                 </h4>
                 <div class="d-flex align-items-center justify-content-center position-absolute-md right-15 top-0 me-2">

@@ -1,12 +1,12 @@
 <template>
     <profile-information></profile-information>
     <div class="col-xl-4 col-xxl-3 col-lg-4 pe-0">
-        <AboutUser />
-        <UserPhotos />
-        <div class="col-xl-8 col-xxl-9 col-lg-8">
+        <!-- <AboutUser /> -->
+        <!-- <UserPhotos /> -->
+        <!-- <div class="col-xl-8 col-xxl-9 col-lg-8"> -->
             <CreatePost />
             <PostContent />
-        </div>
+        <!-- </div> -->
     </div>
 
 </template>
@@ -37,10 +37,10 @@ export default {
         const userId = segments[2];
         console.log(userId);
         // current user_data 
-        axios.get(`http://127.0.0.1:8000/api/current/user/${userId}/posts`).then((response) => {
+        axios.post(`http://127.0.0.1:8000/api/current/user/posts`, { "user_id": userId }).then((response) => {
             console.log(response.data.posts);
-            // console.log(response.data.user);
             this.$root.profileUser = response.data.profile_user_data;
+            console.log(this.$root.profileUser);
             this.$root.current_posts = response.data.posts;
         }).catch((error) => { });
     }

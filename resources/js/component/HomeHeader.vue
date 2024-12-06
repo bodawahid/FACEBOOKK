@@ -172,7 +172,7 @@
         </div>
 
 
-        <a href="default-settings.html" class="p-0 ms-3 menu-icon"><img src="images/profile-4.png" alt="user"
+        <a href="default-settings.html" class="p-0 ms-3 menu-icon"><img :src="'storage/users/image'+ ($root.user[0].profile_picture ?? 'default121000000.jpg') " alt="user"
                 class="w40 mt--1"></a>
 
     </div>

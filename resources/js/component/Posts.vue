@@ -5,6 +5,7 @@
     <create-post-modal></create-post-modal>
     <edit-post v-if="isEditModalVisisble"></edit-post>
     <share-modal></share-modal>
+    <!-- <comment-modal></comment-modal> -->
     <follow-people></follow-people>
     <Loading></Loading>
     <!-- profile -->
@@ -18,6 +19,7 @@ import CreatePostModal from "./CreatePostModal.vue";
 import Spinner from "./Spinner.vue";
 import EditPost from "./EditPost.vue";
 import ShareModal from "./ShareModal.vue";
+// import CommentModal from "./CommentModal.vue";
 import axios from "axios";
 export default {
     components: {
@@ -29,6 +31,7 @@ export default {
         "Spinner": Spinner,
         "EditPost": EditPost,
         "ShareModal": ShareModal,
+        // "CommentModal": CommentModal, 
     }, data() {
         return {
             mediaFiles: [],
@@ -43,15 +46,15 @@ export default {
 
     },
     methods: {
-        
+
     },
     mounted() {
-        if (!this.$root.user) {
-            axios.get('api/current/user/profile/data').then((response) => {
-                this.$root.user = response.data.user;
-            }).catch((error) => { })
-            console.log(this.$root.userId);
-        }
+        // if (!this.$root.user) {
+        //     axios.get('api/current/user/profile/data').then((response) => {
+        //         this.$root.user = response.data.user;
+        //     }).catch((error) => { })
+        //     console.log(this.$root.userId);
+        // }
         axios.get('api/retrieve/data').then((response) => {
             console.log(response.data.posts);
             // console.log(response.data.user);

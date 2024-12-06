@@ -318,7 +318,7 @@ export default {
             this.$parent.isEditModalVisisble = true;
             $('#editMessageModal').modal('show');  // Close the modal using Bootstrap's method
         }, deletePost(post, index) {
-            axios.delete('api/softDelete/post', { params: { " post_id": post.post.id } }).then((Response) => {
+            axios.delete('api/softDelete/post', { params: { "post_id": post.post.id } }).then((Response) => {
                 console.log(Response)
                 this.isDeleted = true;
                 this.$root.current_posts.splice(index, 1);

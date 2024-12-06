@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\facebookController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -18,8 +19,11 @@ Route::middleware('web')->group(function () {
     Route::get('/permenantDelete/{post}/post', [PostController::class, 'permenantDelete'])->name('permenant.delete.post');
     Route::post('/share/post', [PostController::class, 'sharePost'])->name('share.post');
 
+
+    Route::delete('/delete/dssfssjdfjksdkjsjfdjdsfj',[CommentController::class,'create'])->name('deleteComment');
+
     // users profiles 
     // get current user data 
-    Route::get('current/user/profile/data', [UserController::class, 'currentUserData'])->name('user.profile.data');
-    Route::get('current/user/{user_Id}/posts', [UserController::class, 'getUserPosts'])->name('posts.data');
+    Route::get('/current/user/profile/data', [UserController::class, 'currentUserData'])->name('user.profile.data');
+    Route::post('/current/user/posts', [UserController::class, 'getUserPosts'])->name('posts.data');
 });
