@@ -4,9 +4,9 @@
             <div class="loader-overlay" id="loaderOverlay">
                 <div class="loader"></div>
             </div>
-            <a href="#" @click="createPost()"
+            <a href="#" @click.prevent="createPost()"
                 class=" font-xssss fw-600 text-grey-500 card-body p-0 d-flex align-items-center"
-                :disabled="content == ''"><i
+                :disabled="content == '' "><i
                     class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"></i>Create
                 Post</a>
         </div>
@@ -88,6 +88,9 @@ export default {
     }
     , methods: {
         createPost() {
+            if(!this.content) {
+                return ;    
+            }
             axios.post('api/create/post', { 'content': this.content, 'media': [] }).then((response) => {
                 // console.log(response.data.posts);
                 // this.$parent.spinner = true;

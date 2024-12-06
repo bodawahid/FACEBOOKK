@@ -16,9 +16,10 @@ Route::middleware('web')->group(function () {
     Route::post('/edit/post', [PostController::class, 'editPost'])->name('edit.post');
     Route::delete('/softDelete/post', [PostController::class, 'softDelete'])->name('soft.delete.post');
     Route::get('/permenantDelete/{post}/post', [PostController::class, 'permenantDelete'])->name('permenant.delete.post');
+    Route::post('/share/post', [PostController::class, 'sharePost'])->name('share.post');
 
     // users profiles 
     // get current user data 
-    Route::post('current/user/profile/data', [UserController::class, 'currentUserData'])->name('user.profile.data');
+    Route::get('current/user/profile/data', [UserController::class, 'currentUserData'])->name('user.profile.data');
     Route::get('current/user/{user_Id}/posts', [UserController::class, 'getUserPosts'])->name('posts.data');
 });

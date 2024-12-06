@@ -26,7 +26,7 @@ class PostController extends Controller
             $originalName = $file->getClientOriginalName();
             // $extension = $file->getClientOriginalExtension();
             $uniqueFilename = time() . '_' .  $originalName;
-            $path = $file->storeAs('posts/media', $uniqueFilename,  ['disk' => 'public']);
+            $file->storeAs('posts/media', $uniqueFilename,  ['disk' => 'public']);
             // orm is so much easier ... 
             $content_type = $file->getClientMimeType();
             if (str_contains($content_type, 'image')) {
@@ -37,6 +37,15 @@ class PostController extends Controller
             DB::insert('insert into posts_media (post_id, media_path, media_type , uploaded_at) values (?, ?, ?, ?)', [$postId, $uniqueFilename, $content_type, now()]);
         }
         // selecting data 
+        return redirect()->route('get.data');
+    }
+    public function sharePost(Request $request)
+    {
+        $request->validate([
+            'content' => ['nullable', 'string'],
+            'post_id' => ['required', 'numeric', 'exists:posts,id'],
+        ]);
+        DB::insert('insert into posts (content,content_type, user_id , created_at,post_id) values(?,?,?,?,?)', [$request->content ?? null, 'text', Auth::id(), now(), $request->post_id]);
         return redirect()->route('get.data');
     }
     public function editPost(Request $request)

@@ -8,7 +8,7 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h5 class="modal-title" id="editPostModalLabel">Edit Your Post</h5>
-                    <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" @click.prevent="closeModal" aria-label="Close"></button>
                 </div>
 
                 <!-- Modal Body -->
@@ -41,7 +41,7 @@
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-close" @click="closeModal"></button>
+                    <button type="button" class="btn btn-close" @click.prevent="closeModal"></button>
                     <button type="button" class="btn btn-save" id="saveChangesBtn" @click="editPost"
                         :disabled="content === post.post.content || isLoading">Save Changes</button>
                 </div>
@@ -69,7 +69,7 @@ export default {
         },
         editPost() {
             this.isLoading = true;
-            axios.post('api/edit/post', { 'content': this.content, 'post_id': this.$parent.post.post.id })
+            axios.post('api/edit/post', {'content': this.content, 'post_id': this.$parent.post.post.id })
                 .then((response) => {
                     this.successMessage = true;
                     this.$root.current_posts[this.$parent.current_editing_index].post.content = this.content;
