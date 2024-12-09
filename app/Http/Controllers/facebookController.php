@@ -14,8 +14,9 @@ class facebookController extends Controller
     }
     public function getData()
     {
-        // get user information . 
+        // get user information .
         // $user = Auth::user();
+<<<<<<< HEAD
         // getting latest posts , 
         $posts = DB::select('select p.id post_id , p.content post_content , p.created_at , p.updated_at , pm.id pm_id, pm.media_path media_path ,
         pm.media_type, users.name ,  profiles.profile_picture , pm2.media_path SharedPostMediaPath , pm2.media_type 				SharedPostMediaType, prof1.profile_picture SharedPostUserProfilePicture , p.post_id SharedPostId ,
@@ -25,6 +26,13 @@ class facebookController extends Controller
         left join users on users.id = p.user_id left join profiles on users.id = profiles.user_id 
         Left join posts p1 on p1.id = p.post_id LEFT JOIN users u1 on p1.user_id = u1.id 
         LEFT join posts_media pm2 on p1.id = pm2.post_id LEFT JOIN profiles prof1 on u1.id = prof1.user_id 
+=======
+        // getting latest posts ,
+        $posts = DB::select('select p.id post_id , p.content post_content ,
+        p.created_at , p.updated_at , pm.id pm_id, pm.media_path media_path , pm.media_type, users.name ,
+        profile_picture , users.id user_id from posts p left join posts_media pm on p.id = pm.post_id
+        left join users on users.id = p.user_id left join profiles on users.id = profiles.user_id
+>>>>>>> 0cafd5ccdde9a31d40701ab3bfae14cc21c0285a
         where p.deleted_at is null order by p.id desc limit 20');
         // in orm $posts->with('post_media')->get() ;
         $structuredPosts = [];
@@ -66,7 +74,7 @@ class facebookController extends Controller
                 $temp = $post->post_id;
             }
 
-            // searching the media 
+            // searching the media
             if ($post->pm_id) {
                 $structuredPosts[$index - 1]['postMedia'][] = [
                     'media_path' => $post->media_path,

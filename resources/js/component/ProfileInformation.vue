@@ -2,6 +2,7 @@
     <div class="col-lg-12">
         <div class="card w-100 border-0 p-0 bg-white shadow-xss rounded-xxl">
             <div class="card-body h250 p-0 rounded-xxl overflow-hidden m-3">
+<<<<<<< HEAD
                 <img
                     :src="
                         '/storage/users/image/' +
@@ -10,6 +11,9 @@
                     "
                     alt="image"
                 />
+=======
+                <img src="images/u-bg.jpg" alt="image" />
+>>>>>>> 0cafd5ccdde9a31d40701ab3bfae14cc21c0285a
             </div>
             <div class="card-body p-0 position-relative">
                 <figure
@@ -17,16 +21,21 @@
                     style="top: -40px; left: 30px"
                 >
                     <img
+<<<<<<< HEAD
                         :src="
                             '/storage/users/image/' +
                             ($root.profileUser[0].profile_picture ??
                                 'default121000000.jpg')
                         "
+=======
+                        src="images/user-12.png"
+>>>>>>> 0cafd5ccdde9a31d40701ab3bfae14cc21c0285a
                         alt="image"
                         class="float-right p-1 bg-white rounded-circle w-100"
                     />
                 </figure>
                 <h4 class="fw-700 font-sm mt-2 mb-lg-5 mb-4 pl-15">
+<<<<<<< HEAD
                     {{ $root.profileUser[0].name }}
                     <span
                         class="fw-500 font-xssss text-grey-500 mt-1 mb-3 d-block"
@@ -35,6 +44,15 @@
                 </h4>
                 <div
                     v-if="$root.profileUser[0].userID != $root.user[0].id"
+=======
+                    Mohannad Zitoun
+                    <span
+                        class="fw-500 font-xssss text-grey-500 mt-1 mb-3 d-block"
+                        >support@gmail.com</span
+                    >
+                </h4>
+                <div
+>>>>>>> 0cafd5ccdde9a31d40701ab3bfae14cc21c0285a
                     class="d-flex align-items-center justify-content-center position-absolute-md right-15 top-0 me-2"
                 >
                     <a
@@ -65,6 +83,7 @@
                             >About</a
                         >
                     </li>
+<<<<<<< HEAD
                     <li class="list-inline-item me-5">
                         <a
                             class="fw-700 font-xssss text-grey-500 pt-3 pb-3 ls-1 d-inline-block"
@@ -73,6 +92,8 @@
                             >Following</a
                         >
                     </li>
+=======
+>>>>>>> 0cafd5ccdde9a31d40701ab3bfae14cc21c0285a
                     <!-- <li class="list-inline-item me-5"><a class="fw-700 font-xssss text-grey-500 pt-3 pb-3 ls-1 d-inline-block"
                     href="#navtabs2" data-toggle="tab">Membership</a></li>
             <li class="list-inline-item me-5"><a class="fw-700 font-xssss text-grey-500 pt-3 pb-3 ls-1 d-inline-block"

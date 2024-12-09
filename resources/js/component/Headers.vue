@@ -3,17 +3,16 @@
     <home-header />
     <!-- navigation left -->
     <navigation-side />
-
 </template>
 
-
 <script>
-// importing parts ... 
+// importing parts ...
 import axios from "axios";
 import HomeHeader from "./HomeHeader.vue";
 import NavigationSide from "./NavigationSide.vue";
 export default {
     components: {
+<<<<<<< HEAD
         "HomeHeader": HomeHeader,
         "NavigationSide": NavigationSide,
 
@@ -39,3 +38,22 @@ export default {
 
 
 </script>
+=======
+        HomeHeader: HomeHeader,
+        NavigationSide: NavigationSide,
+    },
+    data() {},
+    methods: {},
+    mounted() {
+        if (!this.$root.user) {
+            axios
+                .post(`api/current/user/profile/data`)
+                .then((response) => {
+                    this.$root.user = response.data.user;
+                })
+                .catch((error) => {});
+        }
+    },
+};
+</script>
+>>>>>>> 0cafd5ccdde9a31d40701ab3bfae14cc21c0285a
