@@ -23,16 +23,17 @@ import ShareModal from "./ShareModal.vue";
 import axios from "axios";
 export default {
     components: {
-        "CreatePost": CreatePost,
-        "PostContent": PostContent,
-        "FollowPeople": FollowPeople,
-        "Loading": Loading,
-        "CreatePostModal": CreatePostModal,
-        "Spinner": Spinner,
-        "EditPost": EditPost,
-        "ShareModal": ShareModal,
-        // "CommentModal": CommentModal, 
-    }, data() {
+        CreatePost: CreatePost,
+        PostContent: PostContent,
+        FollowPeople: FollowPeople,
+        Loading: Loading,
+        CreatePostModal: CreatePostModal,
+        Spinner: Spinner,
+        EditPost: EditPost,
+        ShareModal: ShareModal,
+        // "CommentModal": CommentModal,
+    },
+    data() {
         return {
             mediaFiles: [],
             isModalVisible: false,
@@ -41,13 +42,9 @@ export default {
             isEditModalVisisble: false,
             current_editing_index: null,
             sharingPostId: null,
-        }
-
-
+        };
     },
-    methods: {
-
-    },
+    methods: {},
     mounted() {
         // if (!this.$root.user) {
         //     axios.get('api/current/user/profile/data').then((response) => {
@@ -55,12 +52,14 @@ export default {
         //     }).catch((error) => { })
         //     console.log(this.$root.userId);
         // }
-        axios.get('api/retrieve/data').then((response) => {
-            console.log(response.data.posts);
-            // console.log(response.data.user);
-            this.$root.current_posts = response.data.posts;
-        }).catch((error) => { });
-
-    }
-}
+        axios
+            .get("api/retrieve/data")
+            .then((response) => {
+                console.log(response.data.posts);
+                // console.log(response.data.user);
+                this.$root.current_posts = response.data.posts;
+            })
+            .catch((error) => {});
+    },
+};
 </script>
