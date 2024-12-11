@@ -36,13 +36,14 @@ class UserController extends Controller
             left join users on users.id = p.user_id left join profiles on users.id = profiles.user_id
             Left join posts p1 on p1.id = p.post_id LEFT JOIN users u1 on p1.user_id = u1.id
             LEFT join posts_media pm2 on p1.id = pm2.post_id LEFT JOIN profiles prof1 on u1.id = prof1.user_id
-            where p.deleted_at is null order by p.id desc limit 20');
+            where p.deleted_at is null and p.user_id = ? order by p.id desc limit 20',[$request->user_id]);
         // in orm $posts->with('post_media')->get() ;
         $structuredPosts = [];
         $index = 0;
         $temp = null;
         foreach ($posts as $post) {
             if ($temp != $post->post_id) {
+                $is_reacted = DB::select("select count(*) is_reacted from reacts where post_id = ? and user_id = ?", [$post->post_id, Auth::id(),]);
                 $number_of_comments = DB::select('select count(*) number_of_comments from comments where comments.post_id = ?', [$post->post_id]);
                 $number_of_reacts = DB::select('select count(*) number_of_reacts from reacts where post_id = ?', [$post->post_id]);
                 $structuredPosts[$index] = [
@@ -57,6 +58,7 @@ class UserController extends Controller
                         'number_of_reacts' => $number_of_reacts[0]->number_of_reacts,
                         'updated_at' => $post->updated_at,
                         'SharedPostId' => $post->SharedPostId,
+                        'is_reacted'=>$is_reacted ,
 
                     ],
                     'postMedia' => [],

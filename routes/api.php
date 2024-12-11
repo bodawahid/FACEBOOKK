@@ -26,4 +26,10 @@ Route::middleware('web')->group(function () {
     // get current user data 
     Route::get('/current/user/profile/data', [UserController::class, 'currentUserData'])->name('user.profile.data');
     Route::post('/current/user/posts', [UserController::class, 'getUserPosts'])->name('posts.data');
+    // like and dislike post 
+    Route::post('/add/likes',[PostController::class,'addPostLikes'])->name('update.likes');
+    Route::post('/remove/likes',[PostController::class,'removePostLikes'])->name('update.likes');
+    // get reacts info 
+    Route::post('/get/reacts/info',[PostController::class,'getReactsInfo'])->name('get.reacts.info') ;
+
 });

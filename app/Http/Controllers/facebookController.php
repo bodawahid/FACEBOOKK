@@ -32,6 +32,7 @@ class facebookController extends Controller
         $temp = null;
         foreach ($posts as $post) {
             if ($temp != $post->post_id) {
+                $is_reacted = DB::select("select count(*) is_reacted from reacts where post_id = ? and user_id = ?", [$post->post_id, Auth::id(),]);
                 $number_of_comments = DB::select('select count(*) number_of_comments from comments where comments.post_id = ?', [$post->post_id]);
                 $number_of_reacts = DB::select('select count(*) number_of_reacts from reacts where post_id = ?', [$post->post_id]);
                 $structuredPosts[$index] = [
@@ -46,6 +47,7 @@ class facebookController extends Controller
                         'number_of_reacts' => $number_of_reacts[0]->number_of_reacts,
                         'updated_at' => $post->updated_at,
                         'SharedPostId' => $post->SharedPostId,
+                        'is_reacted' => $is_reacted,
 
                     ],
                     'postMedia' => [],
@@ -59,7 +61,7 @@ class facebookController extends Controller
                             'user_name' => $post->SharedPostUserName,
                             'user_id' => $post->SharedPostUserId,
                             'profile_picture' => $post->SharedPostUserProfilePicture,
-                            'SharedPostMedia'=>[]
+                            'SharedPostMedia' => []
                         ];
                 }
                 $index++;

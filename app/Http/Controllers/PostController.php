@@ -74,4 +74,29 @@ class PostController extends Controller
         DB::delete('delete from posts where id = ?', [$request->post_id]);
         return response()->json(['message' => 'post is deleted successfully']);
     }
+    public function addPostLikes(Request $request)
+    {
+        $request->validate([
+            'post_id' => ['required', 'integer', 'exists:posts,id'],
+        ]);
+        DB::insert('insert into reacts (post_id, user_id) values (?, ?)', [$request->post_id, Auth::id()]);
+        return response()->json(['message' => 'reacted successfully']);
+    }
+    public function removePostLikes(Request $request)
+    {
+        $request->validate([
+            'post_id' => ['required', 'integer', 'exists:posts,id'],
+        ]);
+        DB::delete('delete from reacts where post_id = ? and user_id = ?', [$request->post_id, Auth::id()]);
+        return response()->json(['message' => 'deleted react successfully']);
+    }
+    public function getReactsInfo(Request $request)
+    {
+        $request->validate([
+            'post_id' => ['required', 'integer', 'exists:posts,id'],
+        ]);
+        $reactedUsers = DB::select('select u.id , u.name , p.profile_picture  
+        from reacts r join users u on r.user_id = u.id and r.post_id = ? left join profiles p on u.id = p.user_id ', [$request->post_id]);
+        return response()->json($reactedUsers);
+    }
 }

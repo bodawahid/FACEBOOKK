@@ -1,6 +1,7 @@
 <template>
     <create-post></create-post>
     <post-content></post-content>
+    <LikeModal />
     <Spinner></Spinner>
     <create-post-modal></create-post-modal>
     <edit-post v-if="isEditModalVisisble"></edit-post>
@@ -19,8 +20,10 @@ import CreatePostModal from "./CreatePostModal.vue";
 import Spinner from "./Spinner.vue";
 import EditPost from "./EditPost.vue";
 import ShareModal from "./ShareModal.vue";
+// import LikeModal from "./LikeModal.vue";
 // import CommentModal from "./CommentModal.vue";
 import axios from "axios";
+import LikeModal from "./LikeModal.vue";
 export default {
     components: {
         CreatePost: CreatePost,
@@ -31,6 +34,7 @@ export default {
         Spinner: Spinner,
         EditPost: EditPost,
         ShareModal: ShareModal,
+        LikeModal: LikeModal,
         // "CommentModal": CommentModal,
     },
     data() {
@@ -42,6 +46,7 @@ export default {
             isEditModalVisisble: false,
             current_editing_index: null,
             sharingPostId: null,
+            reactedUsers: [],
         };
     },
     methods: {},
@@ -52,14 +57,20 @@ export default {
         //     }).catch((error) => { })
         //     console.log(this.$root.userId);
         // }
-        axios
-            .get("api/retrieve/data")
-            .then((response) => {
-                console.log(response.data.posts);
-                // console.log(response.data.user);
-                this.$root.current_posts = response.data.posts;
-            })
-            .catch((error) => {});
+        const currentURL = window.location.pathname;
+
+        const urlPattern = /^\/user\/\d+\/profile$/; 
+
+        if (!urlPattern.test(currentURL)) {
+            axios
+                .get("api/retrieve/data")
+                .then((response) => {
+                    console.log(response.data.posts);
+                    // console.log(response.data.user);
+                    this.$root.current_posts = response.data.posts;
+                })
+                .catch((error) => { });
+        }
     },
 };
 </script>

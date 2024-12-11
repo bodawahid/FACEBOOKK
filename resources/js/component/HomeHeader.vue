@@ -20,7 +20,7 @@
                     class="bg-grey border-0 lh-32 pt-2 pb-2 ps-5 pe-3 font-xssss fw-500 rounded-xl w350 theme-dark-bg">
             </div>
         </form>
-        <a href="default.html" class="p-2 text-center ms-3 menu-icon center-menu-icon"><i
+        <a href="http://127.0.0.1:8000/" class="p-2 text-center ms-3 menu-icon center-menu-icon"><i
                 class="feather-home font-lg alert-primary btn-round-lg theme-dark-bg text-current "></i></a>
         <a href="default-storie.html" class="p-2 text-center ms-0 menu-icon center-menu-icon"><i
                 class="feather-zap font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 "></i></a>
@@ -172,7 +172,7 @@
         </div>
 
 
-        <a href="default-settings.html" class="p-0 ms-3 menu-icon"><img :src="'storage/users/image'+ ($root.user[0].profile_picture ?? 'default121000000.jpg') " alt="user"
+        <a href="default-settings.html" class="p-0 ms-3 menu-icon"><img :src="'/storage/users/image/'+ ($root.user[0].profile_picture ?? 'default121000000.jpg') " alt="user"
                 class="w40 mt--1"></a>
 
     </div>
