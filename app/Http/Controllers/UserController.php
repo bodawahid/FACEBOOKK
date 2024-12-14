@@ -36,7 +36,7 @@ class UserController extends Controller
             left join users on users.id = p.user_id left join profiles on users.id = profiles.user_id
             Left join posts p1 on p1.id = p.post_id LEFT JOIN users u1 on p1.user_id = u1.id
             LEFT join posts_media pm2 on p1.id = pm2.post_id LEFT JOIN profiles prof1 on u1.id = prof1.user_id
-            where p.deleted_at is null and p.user_id = ? order by p.id desc limit 20',[$request->user_id]);
+            where p.deleted_at is null and p.user_id = ? order by p.id desc limit 20', [$request->user_id]);
         // in orm $posts->with('post_media')->get() ;
         $structuredPosts = [];
         $index = 0;
@@ -58,7 +58,7 @@ class UserController extends Controller
                         'number_of_reacts' => $number_of_reacts[0]->number_of_reacts,
                         'updated_at' => $post->updated_at,
                         'SharedPostId' => $post->SharedPostId,
-                        'is_reacted'=>$is_reacted ,
+                        'is_reacted' => $is_reacted,
 
                     ],
                     'postMedia' => [],
@@ -96,4 +96,87 @@ class UserController extends Controller
         }
         return response()->json(['profile_user_data' => $profile_user_data, 'posts' => $structuredPosts]);
     }
+    public function follow(Request $request)
+    {
+        $request->validate([
+            'user_id' => ['required', 'integer', 'exists:users,id'],
+        ]);
+        
+        $followerID = Auth::id();
+
+        $exists = DB::select(
+            'select 1 from following where follower_id = ? and following_id = ? limit 1',
+            [$followerID, $request->user_id]
+        );
+
+        if (!empty($exists)) {
+            return response()->json(['message' => 'Already following'], 200);
+        }
+        
+        DB::insert(
+            'insert into following (following_id, follower_id ,followed_at) values (? , ? , ?)', 
+            [$request->user_id, $followerID, now()]
+        );
+
+        return response()->json(['message' => 'followed successfully']);
+    }
+
+    public function unfollow(Request $request)
+    {
+        $request->validate([
+            'user_id'=> ['required', 'integer','exists:users,id'],
+        ]);
+
+        $followerID = Auth::id();
+
+        DB::delete(
+            'delete from following where follower_id = ? and following_id = ?',
+            [$followerID, $request->user_id]
+        );
+
+        return response()->json(['message'=> 'Unfollowed successfully']);
+    }
+
+    public function isFollowing($userId)
+    {
+        $followerID = Auth::id();
+
+        // checking if a relationship exists
+        $exists = DB::select('select 1 from following where follower_id = ? and following_id = ? limit 1',
+        [$followerID, $userId]);
+    
+        return response()->json(['is_following' => !empty($exists)]);
+    }
+
+    public function getFollowers(Request $request) {
+        $request->validate([
+            'user_id'=> ['required', 'integer','exists:users,id'],
+        ]);
+
+        $followers = DB::select(
+            'select u.id, u.name
+            from following f join users u on f.follower_id = u.id
+            where f.following_id = ?',
+            [$request->user_id]
+        );
+
+        return response()->json(['followers'=> $followers]);
+    }
+
+    public function getFollowing(Request $request) {
+        $request->validate([
+            'user_id'=> ['required', 'integer','exists:users,id'],
+        ]);
+
+        $following = DB::select(
+            'select u.id, u.name
+            from following f join users u on f.following_id = u.id
+            where f.follower_id = ?',
+            [$request->user_id]
+        );
+
+        return response()->json(['following'=> $following]);
+    }
+
+
 }
