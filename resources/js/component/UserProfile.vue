@@ -24,12 +24,15 @@ export default {
         UserPhotos: UserPhotos,
         Posts: Posts,
     },
-    data() { },
+    data() {
+        currentUserId: null;
+    },
     methods: {},
     mounted() {
         const path = window.location.pathname;
         const segments = path.split("/");
         const userId = segments[2];
+        this.currentUserId = userId;
         // current user_data
         axios
             .post(`http://127.0.0.1:8000/api/current/user/posts`, {

@@ -31,5 +31,16 @@ Route::middleware('web')->group(function () {
     Route::post('/remove/likes',[PostController::class,'removePostLikes'])->name('update.likes');
     // get reacts info 
     Route::post('/get/reacts/info',[PostController::class,'getReactsInfo'])->name('get.reacts.info') ;
+    // follow route
+    Route::post('follow/people',[UserController::class,'follow'])->name('follow.people');
+    // unfollow route
+    Route::post('unfollow/people', [UserController::class, 'unfollow'])->name('unfollow.people');
+    // checking if the authenticated user follows another user
+    Route::get('/is-following/{userId}', [UserController::class, 'isFollowing'])->name('is-following');
+    // get followers
+    Route::post('/followers', [UserController::class, 'getFollowers'])->name('get.followers');
+    // get following
+    Route::post('/following', [UserController::class, 'getFollowing'])->name('get.following');
+
 
 });
