@@ -15,7 +15,7 @@ class UserController extends Controller
     public function currentUserData()
     {
         $userId = Auth::id();
-        $user = DB::select('select bio , country , cover_picture , users.created_at ,email , users.id , name, profile_picture from users left join profiles on users.id = profiles.user_id where users.id = ?', [$userId]);
+        $user = DB::select('select bio , country , cover_picture , users.created_at created_at_ ,email , users.id , name, profile_picture from users left join profiles on users.id = profiles.user_id where users.id = ?', [$userId]);
         return response()->json(['user' => $user]);
     }
     public function getUserPosts(Request $request)
@@ -181,7 +181,7 @@ class UserController extends Controller
 
         return response()->json(['following' => $following]);
     }
-    // update profile 
+    // update profile
     public function updateProfile(Request $request)
     {
         // return $request->cover_image;
