@@ -43,6 +43,7 @@ export default {
             isModalVisible: false,
             spinner: false,
             post: null,
+            content: "",
             isEditModalVisisble: false,
             current_editing_index: null,
             sharingPostId: null,
@@ -59,7 +60,7 @@ export default {
         // }
         const currentURL = window.location.pathname;
 
-        const urlPattern = /^\/user\/\d+\/profile$/; 
+        const urlPattern = /^\/user\/\d+\/profile$/;
 
         if (!urlPattern.test(currentURL)) {
             axios

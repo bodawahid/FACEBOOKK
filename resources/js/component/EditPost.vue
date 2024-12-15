@@ -18,13 +18,13 @@
                         <div class="mb-3">
                             <label for="postText" class="form-label">Update Your Post</label>
                             <textarea class="form-control post-textarea" id="postText"
-                                placeholder="What's on your mind?" rows="2" v-model="content">
+                                placeholder="What's on your mind?" rows="2" v-model="$parent.content">
                             </textarea>
                         </div>
 
                         <!-- Image Upload -->
-                        <div class="mb-3" v-if="post.postMedia.length > 0">
-                            <span v-for="media in post.postMedia" :key="media.id">
+                        <div class="mb-3" v-if="$parent.post.postMedia.length > 0">
+                            <span v-for="media in $parent.post.postMedia" :key="media.id">
                                 <img v-if="media.media_type === 'image'"
                                     :src="'storage/posts/media/' + media.media_path" class="post-image-preview">
                                 <video v-else :src="'storage/posts/media/' + media.media_path" controls
@@ -43,7 +43,7 @@
                     </div>
                     <button type="button" class="btn btn-close" @click.prevent="closeModal"></button>
                     <button type="button" class="btn btn-save" id="saveChangesBtn" @click="editPost"
-                        :disabled="content === post.post.content || isLoading">Save Changes</button>
+                        :disabled="$parent.content === $parent.post.post.content || isLoading">Save Changes</button>
                 </div>
             </div>
         </div>
@@ -58,25 +58,31 @@ export default {
         return {
             isModalVisible: false,  // Manage modal visibility
             isLoading: false,       // Loading state for API request
-            post: this.$parent.post || {},  // Get post data from parent
-            content: this.$parent.post.post.content,            // Content of the post
+            // post: this.$parent.post || {},  // Get post data from parent
+            // content: this.$parent.post.post.content,            // Content of the post
             successMessage: false,
         }
     },
+    // updated() {
+    //     this.post = this.$parent.post;
+    //     this.content = this.$parent.post.post.content;
+
+    // },
     methods: {
         closeModal() {
-            $('#editMessageModal').modal('hide');  // Close the modal using Bootstrap's method
+            $('#editPostModal').modal('hide');  // Close the modal using Bootstrap's method
         },
         editPost() {
             this.isLoading = true;
-            axios.post('api/edit/post', {'content': this.content, 'post_id': this.$parent.post.post.id })
+            axios.post('api/edit/post', { 'content': this.$parent.content, 'post_id': this.$parent.post.post.id })
                 .then((response) => {
                     this.successMessage = true;
-                    this.$root.current_posts[this.$parent.current_editing_index].post.content = this.content;
+                    this.$root.current_posts[this.$parent.current_editing_index].post.content = this.$parent.content;
                     this.isLoading = false;
                     setTimeout(() => {
                         this.successMessage = false;
                     }, 1500);
+                    this.closeModal() ; 
                 })
                 .catch((error) => {
                     this.isLoading = false;

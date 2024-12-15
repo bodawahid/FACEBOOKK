@@ -101,7 +101,7 @@ class UserController extends Controller
         $request->validate([
             'user_id' => ['required', 'integer', 'exists:users,id'],
         ]);
-        
+
         $followerID = Auth::id();
 
         $exists = DB::select(
@@ -112,9 +112,9 @@ class UserController extends Controller
         if (!empty($exists)) {
             return response()->json(['message' => 'Already following'], 200);
         }
-        
+
         DB::insert(
-            'insert into following (following_id, follower_id ,followed_at) values (? , ? , ?)', 
+            'insert into following (following_id, follower_id ,followed_at) values (? , ? , ?)',
             [$request->user_id, $followerID, now()]
         );
 
@@ -124,7 +124,7 @@ class UserController extends Controller
     public function unfollow(Request $request)
     {
         $request->validate([
-            'user_id'=> ['required', 'integer','exists:users,id'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
         ]);
 
         $followerID = Auth::id();
@@ -134,7 +134,7 @@ class UserController extends Controller
             [$followerID, $request->user_id]
         );
 
-        return response()->json(['message'=> 'Unfollowed successfully']);
+        return response()->json(['message' => 'Unfollowed successfully']);
     }
 
     public function isFollowing($userId)
@@ -142,15 +142,18 @@ class UserController extends Controller
         $followerID = Auth::id();
 
         // checking if a relationship exists
-        $exists = DB::select('select 1 from following where follower_id = ? and following_id = ? limit 1',
-        [$followerID, $userId]);
-    
+        $exists = DB::select(
+            'select 1 from following where follower_id = ? and following_id = ? limit 1',
+            [$followerID, $userId]
+        );
+
         return response()->json(['is_following' => !empty($exists)]);
     }
 
-    public function getFollowers(Request $request) {
+    public function getFollowers(Request $request)
+    {
         $request->validate([
-            'user_id'=> ['required', 'integer','exists:users,id'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
         ]);
 
         $followers = DB::select(
@@ -160,12 +163,13 @@ class UserController extends Controller
             [$request->user_id]
         );
 
-        return response()->json(['followers'=> $followers]);
+        return response()->json(['followers' => $followers]);
     }
 
-    public function getFollowing(Request $request) {
+    public function getFollowing(Request $request)
+    {
         $request->validate([
-            'user_id'=> ['required', 'integer','exists:users,id'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
         ]);
 
         $following = DB::select(
@@ -175,8 +179,60 @@ class UserController extends Controller
             [$request->user_id]
         );
 
-        return response()->json(['following'=> $following]);
+        return response()->json(['following' => $following]);
     }
+    // update profile 
+    public function updateProfile(Request $request)
+    {
+        // return $request->cover_image;
+        $request->validate([
+            'name' => ['string', 'max:255'],
+            'profile_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png', 'max:2048'],
+            'cover_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png', 'max:4096'],
+        ]);
 
+        $userId = Auth::id();
 
+        // Initialize variables for file paths
+        // $profileImagePath = null;
+        // $coverImagePath = null;
+        $profile_image_name = null;
+        $cover_image_name = null;
+        // Handle Profile Image Upload
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $originalName = $file->getClientOriginalName();
+            // $extension = $file->getClientOriginalExtension();
+            $profile_image_name = time() . '_' .  $originalName;
+            $file->storeAs('users/image', $profile_image_name,  ['disk' => 'public']);
+        }
+
+        // Handle Cover Image Upload
+        if ($request->hasFile('cover_image')) {
+            $file = $request->file('cover_image');
+            $originalName = $file->getClientOriginalName();
+            // $extension = $file->getClientOriginalExtension();
+            $cover_image_name = time() . '_' .  $originalName;
+            $file->storeAs('users/image', $cover_image_name,  ['disk' => 'public']);
+        }
+
+        // Update the name in the users table
+        if ($request->name !== null) {
+            DB::update(
+                'update users set name = ?, updated_at = ? where id = ?',
+                [$request->name, now(), $userId]
+            );
+        }
+        if ($profile_image_name && $cover_image_name) {
+            DB::update('update profiles set profile_picture = ? , cover_picture = ? where user_id = ? ', [$profile_image_name, $cover_image_name, Auth::id()]);
+        } else if ($profile_image_name) {
+            DB::update('update profiles set profile_picture = ? where user_id = ? ', [$profile_image_name, Auth::id()]);
+        } else {
+            DB::update('update profiles set cover_picture = ? where user_id = ? ', [$cover_image_name, Auth::id()]);
+        }
+
+        // Update the profile_picture and cover_picture in the profiles table
+
+        return response()->json(['message' => 'Profile updated successfully']);
+    }
 }

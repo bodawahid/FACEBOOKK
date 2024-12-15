@@ -220,7 +220,6 @@
                         <div class="card-body d-block p-0" v-else-if="
                             post.SharedPost.SharedPostMedia.length > 1
                         ">
-                            {{ console.log("hello from here") }}
                             <div class="row">
                                 <div v-for="(
                                         image, index
@@ -352,11 +351,16 @@
                         </li>
                     </ul>
                 </div> -->
-                <!-- comment section -->
-                <a href="#" class="d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss"><i
-                        class="feather-message-circle text-dark text-grey-900 btn-round-sm font-lg"></i><span
-                        class="d-none-xss">{{ post.post.number_of_comments }} Comment</span></a>
+                <!--comment modal ...  -->
+                <a @click.prevent="handleCommentClick(post.post.id, post.post.user_name)" href="#"
+                    class="d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss">
+                    <i class="feather-message-circle text-dark text-grey-900 btn-round-sm font-lg"></i>
+                    <span class="d-none-xss">{{ post.post.number_of_comments }} Comments</span>
+                </a>
 
+                <!-- عرض مودال  -->
+                <CommentModal v-if="showCommentModal" @close="showCommentModal = false" @submitComment="submitComment"
+                    :postId="postId" :comments="comments" :currentUserName="currentUserName" />
                 <!-- sharing posts -->
                 <a href="#" id="dropdownMenu21" data-bs-toggle="dropdown" aria-expanded="false"
                     class="ms-auto d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss"><i
@@ -379,14 +383,43 @@
 <script>
 import axios from "axios";
 import moment from "moment";
+import CommentModal from './CommentModal.vue';
 export default {
-    components: {},
+    components: {
+        CommentModal
+    },
     data() {
         return {
+            showCommentModal: false,
             isDeleted: false,
+            postId: null,
+            comments: [],
+            currentUserName: null,
         };
     },
     methods: {
+        handleCommentClick(id, userName) {
+            console.log("Comment button clicked");
+            this.postId = id;
+            this.currentUserName = userName;
+
+            console.log("Selected Post ID:", this.postId);
+
+            if (this.postId) {
+
+                axios.get(`/api/comments/${this.postId}`)
+                    .then(response => {
+                        this.comments = response.data;
+                        this.showCommentModal = true;
+                        console.log(this.comments);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching comments:", error);
+                    });
+            } else {
+                console.error("Post ID is not available");
+            }
+        },
         timeAgo(time) {
             return moment(time).fromNow();
         },
@@ -403,8 +436,9 @@ export default {
         editPost(post, index) {
             this.$parent.current_editing_index = index;
             this.$parent.post = post;
+            this.$parent.content = post.post.content;
             this.$parent.isEditModalVisisble = true;
-            $("#editMessageModal").modal("show"); // Close the modal using Bootstrap's method
+            $("#editPostModal").modal("show"); // Close the modal using Bootstrap's method
         },
         deletePost(post, index) {
             axios

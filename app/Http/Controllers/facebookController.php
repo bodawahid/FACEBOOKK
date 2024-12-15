@@ -34,6 +34,7 @@ class facebookController extends Controller
             if ($temp != $post->post_id) {
                 $is_reacted = DB::select("select count(*) is_reacted from reacts where post_id = ? and user_id = ?", [$post->post_id, Auth::id(),]);
                 $number_of_comments = DB::select('select count(*) number_of_comments from comments where comments.post_id = ?', [$post->post_id]);
+                $number_of_replies = DB::select("select count(*) number_of_replies from replies where comment_id in (select id from comments where comments.post_id = ?)", [$post->post_id]);
                 $number_of_reacts = DB::select('select count(*) number_of_reacts from reacts where post_id = ?', [$post->post_id]);
                 $structuredPosts[$index] = [
                     'post' => [
@@ -43,7 +44,7 @@ class facebookController extends Controller
                         'user_name' => $post->name,
                         'user_id' => $post->user_id,
                         'profile_picture' => $post->profile_picture,
-                        'number_of_comments' => $number_of_comments[0]->number_of_comments,
+                        'number_of_comments' => $number_of_comments[0]->number_of_comments + $number_of_replies[0]->number_of_replies,
                         'number_of_reacts' => $number_of_reacts[0]->number_of_reacts,
                         'updated_at' => $post->updated_at,
                         'SharedPostId' => $post->SharedPostId,
