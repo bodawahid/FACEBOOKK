@@ -472,7 +472,7 @@
                     </div>
                     <!-- loader wrapper -->
 
-                    <div class="section full pe-3 ps-4 pt-4 position-relative feed-body">
+                    <!-- <div class="section full pe-3 ps-4 pt-4 position-relative feed-body">
                         <h4 class="font-xsssss text-grey-500 text-uppercase fw-700 ls-3">CONTACTS</h4>
                         <ul class="list-group list-group-flush">
                             <li
@@ -565,8 +565,8 @@
                             </li>
 
                         </ul>
-                    </div>
-                    <div class="section full pe-3 ps-4 pt-4 pb-4 position-relative feed-body">
+                    </div> -->
+                    <!-- <div class="section full pe-3 ps-4 pt-4 pb-4 position-relative feed-body">
                         <h4 class="font-xsssss text-grey-500 text-uppercase fw-700 ls-3">GROUPS</h4>
                         <ul class="list-group list-group-flush">
                             <li
@@ -603,8 +603,8 @@
                                 <span class="bg-success ms-auto btn-round-xss"></span>
                             </li>
                         </ul>
-                    </div>
-                    <div class="section full pe-3 ps-4 pt-0 pb-4 position-relative feed-body">
+                    </div> -->
+                    <!-- <div class="section full pe-3 ps-4 pt-0 pb-4 position-relative feed-body">
                         <h4 class="font-xsssss text-grey-500 text-uppercase fw-700 ls-3">Pages</h4>
                         <ul class="list-group list-group-flush">
                             <li
@@ -631,7 +631,7 @@
                             </li>
 
                         </ul>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

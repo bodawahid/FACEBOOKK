@@ -2,20 +2,38 @@
     <nav class="navigation scroll-bar">
         <div class="container ps-0 pe-0">
             <div class="nav-content">
-                <div class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2 mt-2">
-                    <div class="nav-caption fw-600 font-xssss text-grey-500"><span>New </span>Feeds</div>
+                <div
+                    class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2 mt-2"
+                >
+                    <div class="nav-caption fw-600 font-xssss text-grey-500">
+                        <span>New </span>Feeds
+                    </div>
                     <ul class="mb-1 top-content">
                         <li class="logo d-none d-xl-block d-lg-block"></li>
-                        <li><a href="default-group.html" class="nav-content-bttn open-font"><i
-                                    class="feather-zap btn-round-md bg-mini-gradiant me-3"></i><span>Follower
-                                    List</span></a></li>
-                        <li><a @click.prevent="goToMyProfile()" class="nav-content-bttn open-font"><i
-                                    class="feather-user btn-round-md bg-primary-gradiant me-3"></i><span>Author
-                                    Profile </span></a></li>
+                        <li>
+                            <a
+                                href="default-group.html"
+                                class="nav-content-bttn open-font"
+                                ><i
+                                    class="feather-zap btn-round-md bg-mini-gradiant me-3"
+                                ></i
+                                ><span>Follower List</span></a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                @click.prevent="goToMyProfile()"
+                                class="nav-content-bttn open-font"
+                                ><i
+                                    class="feather-user btn-round-md bg-primary-gradiant me-3"
+                                ></i
+                                ><span>Author Profile </span></a
+                            >
+                        </li>
                     </ul>
                 </div>
 
-                <div class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2">
+                <!-- <div class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2">
                     <div class="nav-caption fw-600 font-xssss text-grey-500"><span>More </span>Pages</div>
                     <ul class="mb-3">
                         <li><a href="default-email-box.html" class="nav-content-bttn open-font"><i
@@ -32,8 +50,8 @@
                                     class="font-xl text-current feather-youtube me-3"></i><span>Live
                                     Stream</span></a></li>
                     </ul>
-                </div>
-                <div class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1">
+                </div> -->
+                <!-- <div class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1">
                     <div class="nav-caption fw-600 font-xssss text-grey-500"><span></span> Account</div>
                     <ul class="mb-1">
                         <li class="logo d-none d-xl-block d-lg-block"></li>
@@ -47,25 +65,17 @@
                                     class="font-sm feather-message-square me-3 text-grey-500"></i><span>Chat</span><span
                                     class="circle-count bg-warning mt-0">23</span></a></li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </div>
     </nav>
-
-
-
 </template>
 <script>
 export default {
-
     methods: {
         goToMyProfile() {
-
             window.location.href = `/user/${this.$root.user[0].id}/profile`;
         },
-    }
-
-}
-
-
+    },
+};
 </script>
