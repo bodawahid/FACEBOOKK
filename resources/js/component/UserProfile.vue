@@ -25,6 +25,9 @@ export default {
         Posts: Posts,
     },
     data() {
+        return {
+            isFollowing: false,     // tracks if the active user is following the user in page
+        }
         currentUserId: null;
     },
     methods: {},
@@ -40,6 +43,7 @@ export default {
             })
             .then((response) => {
                 console.log(response.data.posts);
+                this.isFollowing = response.data.is_following[0].is_following;
                 this.$root.profileUser = response.data.profile_user_data;
                 console.log(this.$root.profileUser);
                 this.$root.current_posts = response.data.posts;

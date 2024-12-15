@@ -40,12 +40,18 @@
                     <a
                         href="#"
                         class="d-none d-lg-block p-3 z-index-1 rounded-3 text-white font-xsssss text-uppercase fw-700 ls-3"
+<<<<<<< HEAD
                         :class="isFollowing ? 'bg-danger' : 'bg-success'"
                         @click.prevent="
                             toggleFollow($root.profileUser[0].userID)
                         "
                     >
                         {{ isFollowing ? "Unfollow" : "Follow" }}
+=======
+                        :class="$parent.isFollowing ? 'bg-danger' : 'bg-success'"
+                        @click.prevent="toggleFollow($root.profileUser[0].userID)">
+                        {{ $parent.isFollowing ? 'Unfollow' : 'Follow' }}
+>>>>>>> ecfc335 (followers config)
                     </a>
                     <!-- <a
                         href="#"
@@ -296,9 +302,14 @@ import axios from "axios";
 export default {
     data() {
         return {
+<<<<<<< HEAD
             isFollowing: false, // tracks if the active user is following the user in page
             followers: [], // list of followers
             following: [], // list of following
+=======
+            followers: [],      // list of followers
+            following: [],      // list of following
+>>>>>>> ecfc335 (followers config)
             showModal: false,
             userData: {
                 name: "", // Default user name
@@ -315,14 +326,18 @@ export default {
     mounted() {
         this.initializeUserData();
     },
+<<<<<<< HEAD
     created() {
         this.checkFollowing(); // updates the 'isFollowing' on page load
     },
+=======
+>>>>>>> ecfc335 (followers config)
     methods: {
         openEdit() {
             this.userData.name = this.$root.profileUser[0].name;
             this.showModal = true;
         },
+<<<<<<< HEAD
         async checkFollowing(userId) {
             try {
                 const response = await axios.get(`/api/is-following/${userId}`);
@@ -346,6 +361,19 @@ export default {
                 }
             } catch (error) {
                 console.error("Error toggling follow status:", error);
+=======
+        async toggleFollow(userId) {
+            if (this.$parent.isFollowing) {     // unfollow
+                await axios.post('/api/unfollow/people', { user_id: userId })
+                    .then((response) => { 
+                        this.$parent.isFollowing = false })
+                    .catch((error) => { });
+            }
+            else {      // follow
+                await axios.post('/api/follow/people', { user_id: userId })
+                    .then((response) => { this.$parent.isFollowing = true })
+                    .catch((error) => { });
+>>>>>>> ecfc335 (followers config)
             }
         },
 
@@ -392,6 +420,10 @@ export default {
             this.showModal = false; // Close the modal after saving
         },
         updateProfile() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> ecfc335 (followers config)
             const formData = new FormData();
             if (this.userData.name != this.$root.profileUser[0].name)
                 formData.append("name", this.userData.name);
@@ -429,10 +461,13 @@ export default {
     props: {
         profileUserId: { type: Number, required: true },
     },
+<<<<<<< HEAD
     mounted() {
         //check follow status when the component is mounted
         this.checkFollowing(this.$root.profileUser[0].userID);
     },
+=======
+>>>>>>> ecfc335 (followers config)
 };
 </script>
 

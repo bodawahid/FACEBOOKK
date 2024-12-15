@@ -94,7 +94,14 @@ class UserController extends Controller
                     ];
             }
         }
-        return response()->json(['profile_user_data' => $profile_user_data, 'posts' => $structuredPosts]);
+        $followerID = Auth::id();
+
+        // checking if a relationship exists
+        $exists = DB::select(
+            'select count(*) is_following from following where follower_id = ? and following_id = ? limit 1',
+            [$followerID, $request->user_id]
+        );
+        return response()->json(['profile_user_data' => $profile_user_data, 'posts' => $structuredPosts, 'is_following' => $exists]);
     }
     public function follow(Request $request)
     {
@@ -137,18 +144,10 @@ class UserController extends Controller
         return response()->json(['message' => 'Unfollowed successfully']);
     }
 
-    public function isFollowing($userId)
-    {
-        $followerID = Auth::id();
+    // public function isFollowing($userId)
+    // {
 
-        // checking if a relationship exists
-        $exists = DB::select(
-            'select 1 from following where follower_id = ? and following_id = ? limit 1',
-            [$followerID, $userId]
-        );
-
-        return response()->json(['is_following' => !empty($exists)]);
-    }
+    // }
 
     public function getFollowers(Request $request)
     {
