@@ -452,11 +452,8 @@ export default {
     methods: {
 
         handleCommentClick(id, userName) {
-            console.log("Comment button clicked");
             this.postId = id;
             this.currentUserName = userName;
-
-            console.log("Selected Post ID:", this.postId);
 
             if (this.postId) {
                 axios
@@ -464,13 +461,11 @@ export default {
                     .then((response) => {
                         this.comments = response.data;
                         this.showCommentModal = true;
-                        console.log(this.comments);
                     })
                     .catch((error) => {
                         console.error("Error fetching comments:", error);
                     });
             } else {
-                console.error("Post ID is not available");
             }
         },
         timeAgo(time) {
@@ -499,7 +494,6 @@ export default {
                     params: { post_id: post.post.id },
                 })
                 .then((Response) => {
-                    console.log(Response);
                     this.isDeleted = true;
                     this.$root.current_posts.splice(index, 1);
                     setTimeout(() => {
@@ -519,7 +513,6 @@ export default {
                 axios
                     .post("api/remove/likes", { post_id: id })
                     .then((Response) => {
-                        console.log(Response.data);
                         this.$root.current_posts[
                             index
                         ].post.is_reacted[0].is_reacted = 0;
@@ -530,7 +523,6 @@ export default {
                 axios
                     .post("api/add/likes", { post_id: id })
                     .then((Response) => {
-                        console.log(Response.data);
                         this.$root.current_posts[
                             index
                         ].post.is_reacted[0].is_reacted = 1;

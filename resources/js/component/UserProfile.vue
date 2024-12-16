@@ -42,10 +42,8 @@ export default {
                 user_id: userId,
             })
             .then((response) => {
-                console.log(response.data.posts);
                 this.isFollowing = response.data.is_following[0].is_following;
                 this.$root.profileUser = response.data.profile_user_data;
-                console.log(this.$root.profileUser);
                 this.$root.current_posts = response.data.posts;
             })
             .catch((error) => { });

@@ -151,8 +151,9 @@ class UserController extends Controller
         ]);
 
         $followers = DB::select(
-            'select u.id, u.name
+            'select u.id, u.name , p.profile_picture
             from following f join users u on f.follower_id = u.id
+            left join profiles p on p.user_id = u.id
             where f.following_id = ?',
             [$request->user_id]
         );
@@ -167,8 +168,9 @@ class UserController extends Controller
         ]);
 
         $following = DB::select(
-            'select u.id, u.name
+            'select u.id, u.name , p.profile_picture
             from following f join users u on f.following_id = u.id
+            left join profiles p on p.user_id = u.id
             where f.follower_id = ?',
             [$request->user_id]
         );
@@ -221,7 +223,7 @@ class UserController extends Controller
             DB::update('update profiles set profile_picture = ? , cover_picture = ? where user_id = ? ', [$profile_image_name, $cover_image_name, Auth::id()]);
         } else if ($profile_image_name) {
             DB::update('update profiles set profile_picture = ? where user_id = ? ', [$profile_image_name, Auth::id()]);
-        } else {
+        } else if($cover_image_name) {
             DB::update('update profiles set cover_picture = ? where user_id = ? ', [$cover_image_name, Auth::id()]);
         }
 

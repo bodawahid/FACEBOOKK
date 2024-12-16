@@ -1,8 +1,9 @@
 <template>
-    <div class="nav-header bg-white shadow-xs border-0">
+    <div class="nav-header bg-white shadow-xs border-0"
+    style="z-index: 555;">
         <div class="nav-top">
-            <a href="index.html"><i class="feather-zap text-success display1-size me-2 ms-0"></i><span
-                    class="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">Sociala.
+            <a href="/"><i class="feather-zap text-success display1-size me-2 ms-0"></i><span
+                    class="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">FaceTook
                 </span>
             </a>
             <a href="#" class="mob-menu ms-auto me-2 chat-active-btn"><i
@@ -21,7 +22,7 @@
                     class="bg-grey border-0 lh-32 pt-2 pb-2 ps-5 pe-3 font-xssss fw-500 rounded-xl w350 theme-dark-bg" />
             </div>
         </form>
-        <a href="http://127.0.0.1:8000/" class="p-2 text-center ms-3 menu-icon center-menu-icon"><i
+        <a href="/" class="p-2 text-center ms-3 menu-icon center-menu-icon"><i
                 class="feather-home font-lg alert-primary btn-round-lg theme-dark-bg text-current"></i></a>
         <a href="default-storie.html" class="p-2 text-center ms-0 menu-icon center-menu-icon"><i
                 class="feather-zap font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500"></i></a>
@@ -198,13 +199,16 @@
             </div>
         </div>
 
-        <a href="default-settings.html" class="p-0 ms-3"><img :src="'/storage/users/image/' +
+        <a type="button" @click="$parent.goToMyProfile()" class="p-0 ms-3"><img :src="'/storage/users/image/' +
             ($root.user[0].profile_picture ?? 'default121000000.jpg')
             " alt="user" class="w40 mt--1 menu-icon-lol" /></a>
     </div>
 </template>
 <script>
-export default {};
+export default {
+    methods:{
+    }
+};
 </script>
 
 <style scoped>

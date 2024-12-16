@@ -137,18 +137,11 @@ export default {
     submitReply(replyingCommentId) {
       if (!this.replyContent) return;
 
-      console.log("Post ID:", this.postId);
-      console.log("Reply Content:", this.replyContent);
-
-
       axios.post(`/api/comments/${this.replyingCommentId}/replies`, {
         comment_id: replyingCommentId,
         content: this.replyContent
       })
         .then(response => {
-          console.log('Reply added response:', response.data);
-
-
           const comment = this.comments.find(c => c.id === replyingCommentId);
           if (comment) {
             comment.replies = comment.replies || [];
@@ -182,9 +175,6 @@ export default {
 
       axios.put(`/api/comments/replies/${this.editingReplyId}`, { content: this.editReplyContent })
         .then(response => {
-          console.log('Reply updated:', response.data);
-
-
           const comment = this.comments.find(c => c.id === this.ReplyComment);
           if (comment) {
 
@@ -210,14 +200,8 @@ export default {
 
     deleteReply() {
       if (this.ReplyToDeleteId && this.commentReplyToDeleteId) {
-        console.log(`/api/comments/${this.commentReplyToDeleteId}/replies/${this.ReplyToDeleteId}`);
-
-
         axios.delete(`/api/comments/replies/${this.ReplyToDeleteId}`)
-          .then(() => {
-            console.log('Reply deleted successfully.');
-
-
+          .then((response) => {
             const comment = this.comments.find(comment => comment.id === this.commentReplyToDeleteId);
             if (comment) {
 
@@ -252,17 +236,11 @@ export default {
     },
     submitComment() {
       if (!this.commentContent) return;
-
-      console.log("Post ID:", this.postId);
-      console.log("Comment Content:", this.commentContent);
-
-
       axios.post('/api/comments', {
         post_id: this.postId,
         content: this.commentContent
       })
         .then(response => {
-          console.log('Comment added response:', response.data);
           this.comments.unshift({
             id: response.data.id,
             content: this.commentContent,
@@ -278,7 +256,6 @@ export default {
           }
           this.commentContent = '';
           this.$emit('comment-added', response.data);
-          console.log(this.comments);
         })
         .catch(error => {
           console.error('Error posting comment:', error);
@@ -300,9 +277,6 @@ export default {
 
       axios.put(`/api/comments/${this.editingCommentId}`, { content: this.editContent })
         .then(response => {
-          console.log('Comment updated:', response.data);
-
-
           const comment = this.comments.find(c => c.id === this.editingCommentId);
           if (comment) {
             comment.content = this.editContent;
@@ -333,9 +307,6 @@ export default {
       if (this.commentToDeleteId) {
         axios.delete(`/api/comments/${this.commentToDeleteId}`)
           .then(() => {
-            console.log('Comment deleted successfully.');
-
-
             const index = this.comments.findIndex(comment => comment.id === this.commentToDeleteId);
             if (index !== -1) {
               this.comments.splice(index, 1);

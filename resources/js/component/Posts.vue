@@ -10,7 +10,6 @@
     <!-- <comment-modal></comment-modal> -->
     <!-- <follow-people></follow-people> -->
     <!-- <Loading ></Loading> -->
-    <!-- profile -->
 </template>
 <script>
 import CreatePost from "./CreatePost.vue";
@@ -36,7 +35,6 @@ export default {
         ShareModal: ShareModal,
         LikeModal: LikeModal,
         MediaModal: MediaModal,
-        // "CommentModal": CommentModal,
     },
     data() {
         return {
@@ -49,9 +47,6 @@ export default {
             current_editing_index: null,
             sharingPostId: null,
             reactedUsers: [],
-            // hasTriggered: true,
-            // isLoading: true,
-            marginFromBottom: 50, // 50px before the bottom
             currentPostMedia: [],
             currentPostIndex: 0,
             enterModal: false,
@@ -62,7 +57,6 @@ export default {
         openModal(post, index) {
             this.currentPostMedia = post;
             this.currentPostIndex = index;
-            console.log(this.currentPostMedia);
             window.addEventListener('keydown', this.handleKeydown);
             $('#mediaModal').modal('show');
 
@@ -98,22 +92,9 @@ export default {
                 this.closeModal();  // Loop back to the last item
             }
         },
-        // checkScrollPosition() {
-        //     const scrollPosition = window.scrollY + window.innerHeight; // Current scroll position + window height
-        //     const pageHeight = document.body.offsetHeight; // Total height of the document
-
-        //     // Check if we are within 50px of the bottom
-        //     if (scrollPosition >= pageHeight - this.marginFromBottom && !this.hasTriggered) {
-        //         this.hasTriggered = true;
-        //         this.executeFunction();
-        //         // this.isLoading = false;
-        //     }
-        // },
-
         executeFunction() {
             axios.get('/api/retrieve/data').
                 then((response) => {
-                    console.log(response.data)
                     this.$root.current_posts = response.data.posts;
                 }).catch((error) => { });
         }

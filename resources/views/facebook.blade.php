@@ -676,10 +676,10 @@
                     <div class="modal-body p-0">
                         <div class="card w-100 border-0 rounded-3 overflow-hidden bg-gradiant-bottom bg-gradiant-top">
                             <div class="owl-carousel owl-theme dot-style3 story-slider owl-dot-nav nav-none">
-                                <div class="item"><img src="images/story-5.jpg" alt="image"></div>
-                                <div class="item"><img src="images/story-6.jpg" alt="image"></div>
-                                <div class="item"><img src="images/story-7.jpg" alt="image"></div>
-                                <div class="item"><img src="images/story-8.jpg" alt="image"></div>
+                                <div class="item"><img src="/images/story-5.jpg" alt="image"></div>
+                                <div class="item"><img src="/images/story-6.jpg" alt="image"></div>
+                                <div class="item"><img src="/images/story-7.jpg" alt="image"></div>
+                                <div class="item"><img src="/images/story-8.jpg" alt="image"></div>
 
                             </div>
                         </div>
@@ -700,7 +700,7 @@
                 <div class="modal-popup-header w-100 border-bottom">
                     <div class="card p-3 d-block border-0 d-block">
                         <figure class="avatar mb-0 float-left me-2">
-                            <img src="images/user-12.png" alt="image" class="w35 me-1">
+                            <img src="/images/user-12.png" alt="image" class="w35 me-1">
                         </figure>
                         <h5 class="fw-700 text-primary font-xssss mt-1 mb-1">Hendrix Stamp</h5>
                         <h4 class="text-grey-500 font-xsssss mt-0 mb-0"><span

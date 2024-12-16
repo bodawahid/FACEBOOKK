@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/feather.css') }}">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/lightbox.css') }}">
@@ -258,15 +258,15 @@
 
         <!-- right chat -->
 
-        <div class="app-footer border-0 shadow-lg bg-primary-gradiant">
+        {{-- <div class="app-footer border-0 shadow-lg bg-primary-gradiant">
             <a href="default.html" class="nav-content-bttn nav-center"><i class="feather-home"></i></a>
             <a href="default-video.html" class="nav-content-bttn"><i class="feather-package"></i></a>
             <a href="default-live-stream.html" class="nav-content-bttn" data-tab="chats"><i
                     class="feather-layout"></i></a>
             <a href="shop-2.html" class="nav-content-bttn"><i class="feather-layers"></i></a>
-            <a href="default-settings.html" class="nav-content-bttn"><img src="images/female-profile.png"
+            <a href="default-settings.html" class="nav-content-bttn"><img src="/images/female-profile.png"
                     alt="user" class="w30 shadow-xss"></a>
-        </div>
+        </div> --}}
 
         <div class="app-header-search">
             <form class="search-form">
@@ -285,7 +285,7 @@
 
     </div>
 
-    <div class="modal bottom side fade" id="Modalstries" tabindex="-1" role="dialog" style=" overflow-y: auto;">
+    {{-- <div class="modal bottom side fade" id="Modalstries" tabindex="-1" role="dialog" style=" overflow-y: auto;">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content border-0 bg-transparent">
                 <button type="button" class="close mt-0 position-absolute top--30 right--10" data-dismiss="modal"
@@ -310,14 +310,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="modal-popup-chat">
         <div class="modal-popup-wrap bg-white p-0 shadow-lg rounded-3">
             <div class="modal-popup-header w-100 border-bottom">
                 <div class="card p-3 d-block border-0 d-block">
                     <figure class="avatar mb-0 float-left me-2">
-                        <img src="images/user-12.png" alt="image" class="w35 me-1">
+                        <img src="/images/user-12.png" alt="image" class="w35 me-1">
                     </figure>
                     <h5 class="fw-700 text-primary font-xssss mt-1 mb-1">Hendrix Stamp</h5>
                     <h4 class="text-grey-500 font-xsssss mt-0 mb-0"><span
@@ -357,8 +357,8 @@
     <script src="{{ asset('js/plugin.js') }}"></script>
     <script src="{{ asset('js/lightbox.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
-    <script src="{{ asset('js/jquery.easypiechart.min.js') }}"></script>
-    <script>
+    {{-- <script src="{{ asset('js/jquery.easypiechart.min.js') }}"></script> --}}
+    {{-- <script>
         $('.chart').easyPieChart({
             easing: 'easeOutElastic',
             delay: 3000,
@@ -373,7 +373,7 @@
                 this.el.children[0].innerHTML = Math.round(percent);
             }
         });
-    </script>
+    </script> --}}
 
 </body>
 

@@ -58,26 +58,23 @@ export default {
         sharePost() {
             this.isLoading = true;
             axios.post('api/share/post', { 'content': this.content, 'post_id': this.$parent.sharingPostId }).then((response) => {
-                // this.$parent.spinner = true;
-                document.getElementById("loaderOverlay").style.visibility = "visible";
                 if (this.$root.profileUser.length > 0 && this.$root.user[0].id != this.$root.profileUser[0].userID) {
                     window.location.href = `/user/${this.$root.user[0].id}/profile`;
 
                 }
-                // this.isLoading = false;
+                document.getElementById("loaderOverlay").style.visibility = "visible";
+                this.isLoading = false;
                 this.$root.current_posts = [];
                 this.content = '';
-                console.log('shared');
-                console.log(response.data);
-                this.$root.current_posts_id = response.data.posts_id;
-                this.isLoading = false; 
+                if (this.$root.profileUser.length)
+                    window.scrollTo({
+                        top: 550,
+                        behavior: 'smooth', // Smooth scrolling effect
+                    });
                 setTimeout(() => {
                     this.$root.current_posts = response.data.posts;
-                    // this.$parent.isLoading = true;
-                    // this.$parent.hasTriggered = false ;       
-                    this.$parent.spinner = false;
                     document.getElementById("loaderOverlay").style.visibility = "hidden";
-                }, 1000);
+                }, 1500);
                 $('#sharePostModal').modal('hide');  // Close the modal using Bootstrap's method
             }).catch((error) => { });
 

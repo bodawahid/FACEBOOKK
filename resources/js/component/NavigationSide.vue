@@ -21,8 +21,8 @@
                             >
                         </li>
                         <li>
-                            <a
-                                @click.prevent="goToMyProfile()"
+                            <a type="button"
+                                @click.prevent="$parent.goToMyProfile()"
                                 class="nav-content-bttn open-font"
                                 ><i
                                     class="feather-user btn-round-md bg-primary-gradiant me-3"
@@ -72,10 +72,5 @@
 </template>
 <script>
 export default {
-    methods: {
-        goToMyProfile() {
-            window.location.href = `/user/${this.$root.user[0].id}/profile`;
-        },
-    },
 };
 </script>

@@ -23,7 +23,8 @@
                 </h4>
                 <div v-if="$root.profileUser[0].userID != $root.user[0].id"
                     class="d-flex align-items-center justify-content-center position-absolute-md right-15 top-0 me-2">
-                    <a href="#" :class="$parent.isFollowing ? 'bg-danger' : 'bg-success'"
+                    <a href="#" style="color: white;" class="btn"
+                        :class="$parent.isFollowing ? 'bg-danger' : 'bg-success'"
                         @click.prevent="toggleFollow($root.profileUser[0].userID)">
                         {{ $parent.isFollowing ? 'Unfollow' : 'Follow' }}
                     </a>
@@ -104,11 +105,10 @@
                         <a class="fw-700 font-xssss text-grey-500 pt-3 pb-3 ls-1 d-inline-block active" href="#navtabs1"
                             data-toggle="tab">About</a>
                     </li>
-                    <li class="list-inline-item me-5">
+                    <li class="list-inline-item me-5" @click="fetchFollowing($root.profileUser[0].userID)"
+                        data-bs-toggle="modal" data-bs-target="#followingModal">
                         <button type="button" class="fw-700 font-xssss text-grey-500 pt-3 pb-3 ls-1 d-inline-block"
-                            style="border: none; background-color: white"
-                            @click="fetchFollowing($root.profileUser[0].userID)" data-bs-toggle="modal"
-                            data-bs-target="#followingModal">
+                            style="border: none; background-color: white">
                             Following
                         </button>
                     </li>
@@ -138,7 +138,9 @@
                                         <li v-if="followers.length === 0">
                                             No followers yet
                                         </li>
-                                        <li v-for="user in followers" :key="user.id">
+                                        <li class="reaction-item" v-for="user in followers" :key="user.id">
+                                            <img
+                                                :src="'/storage/users/image/' + (user.profile_picture ?? 'default121000000.jpg')">
                                             {{ user.name }}
                                         </li>
                                     </ul>
@@ -161,7 +163,9 @@
                                 </div>
                                 <div class="modal-body" style="overflow-y: auto; max-height: 400px">
                                     <ul class="list-unstyled">
-                                        <li v-for="user in following" :key="user.id">
+                                        <li class="reaction-item" v-for="user in following" :key="user.id">
+                                            <img
+                                                :src="'/storage/users/image/' + (user.profile_picture ?? 'default121000000.jpg')">
                                             {{ user.name }}
                                         </li>
                                         <li v-if="following.length === 0">
@@ -260,7 +264,6 @@ export default {
             }
         },
         saveChanges() {
-            console.log("Saving changes... edited");
             this.updateProfile(); // Call updateProfile on save
             this.showModal = false; // Close the modal after saving
         },
@@ -274,10 +277,6 @@ export default {
             axios
                 .post("/api/update/profile", formData)
                 .then((response) => {
-                    console.log(
-                        "Profile updated successfully:",
-                        response.data.message
-                    );
                     if (this.userData.name != this.$root.profileUser[0].name)
                         this.$root.profileUser[0].name = this.userData.name;
                     this.showModal = false; // Close the modal on success
@@ -308,6 +307,23 @@ export default {
 <!-- style -->
 
 <style scoped>
+.reaction-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.reaction-item img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.reaction-item span {
+    font-weight: bold;
+}
+
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -325,6 +341,10 @@ export default {
     margin-top: -36px;
     /* Push content below the overlapping profile picture */
     z-index: 10;
+}
+
+.modal-content {
+    top: 80px
 }
 
 .modal-container {
@@ -477,7 +497,8 @@ export default {
     background-color: #dc3545;
     color: white;
 }
-.button-follow{
+
+.button-follow {
     z-index: 1;
 }
 </style>
