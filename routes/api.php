@@ -33,6 +33,10 @@ Route::middleware('web')->group(function () {
     Route::get('/permenantDelete/{post}/post', [PostController::class, 'permenantDelete'])->name('permenant.delete.post');
     Route::post('/share/post', [PostController::class, 'sharePost'])->name('share.post');
     Route::delete('/delete/dssfssjdfjksdkjsjfdjdsfj', [CommentController::class, 'create'])->name('deleteComment');
+    
+
+    // get more data 
+    // Route::post('/get/more/data',[PostController::class,'getMoreData'])->name('get.more.data') ;
 
     // users profiles 
     // get current user data 
@@ -48,7 +52,7 @@ Route::middleware('web')->group(function () {
     // unfollow route
     Route::post('unfollow/people', [UserController::class, 'unfollow'])->name('unfollow.people');
     // checking if the authenticated user follows another user
-    Route::get('/is-following/{userId}', [UserController::class, 'isFollowing'])->name('is-following');
+    // Route::get('/is-following/{userId}', [UserController::class, 'isFollowing'])->name('is-following');
     // get followers
     Route::post('/followers', [UserController::class, 'getFollowers'])->name('get.followers');
     // get following

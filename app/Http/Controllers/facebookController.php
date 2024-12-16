@@ -18,16 +18,18 @@ class facebookController extends Controller
         // $user = Auth::user();
         // getting latest posts ,
         $posts = DB::select('select p.id post_id , p.content post_content , p.created_at , p.updated_at , pm.id pm_id, pm.media_path media_path ,
-        pm.media_type, users.name ,  profiles.profile_picture , pm2.media_path SharedPostMediaPath , pm2.media_type 				SharedPostMediaType, prof1.profile_picture SharedPostUserProfilePicture , p.post_id SharedPostId ,
+        pm.media_type, users.name ,  profiles.profile_picture , pm2.media_path SharedPostMediaPath , pm2.media_type
+        SharedPostMediaType, prof1.profile_picture SharedPostUserProfilePicture , p.post_id SharedPostId ,
         users.id user_id , p1.content , p1.content SharedPostContent , P1.created_at SharedPostCreatedAt,
         p1.deleted_at SharedPostDeletedAt , u1.name SharedPostUserName , u1.id 	SharedPostUserId
         from posts p left join posts_media pm on p.id = pm.post_id
         left join users on users.id = p.user_id left join profiles on users.id = profiles.user_id
         Left join posts p1 on p1.id = p.post_id LEFT JOIN users u1 on p1.user_id = u1.id
         LEFT join posts_media pm2 on p1.id = pm2.post_id LEFT JOIN profiles prof1 on u1.id = prof1.user_id
-        where p.deleted_at is null order by p.id desc limit 20');
+        where p.deleted_at is null order by p.id desc');
         // in orm $posts->with('post_media')->get() ;
         $structuredPosts = [];
+        $posts_id = [];
         $index = 0;
         $temp = null;
         foreach ($posts as $post) {
@@ -36,6 +38,7 @@ class facebookController extends Controller
                 $number_of_comments = DB::select('select count(*) number_of_comments from comments where comments.post_id = ?', [$post->post_id]);
                 $number_of_replies = DB::select("select count(*) number_of_replies from replies where comment_id in (select id from comments where comments.post_id = ?)", [$post->post_id]);
                 $number_of_reacts = DB::select('select count(*) number_of_reacts from reacts where post_id = ?', [$post->post_id]);
+                $posts_id[$index] = $post->post_id;
                 $structuredPosts[$index] = [
                     'post' => [
                         'id' => $post->post_id,
@@ -84,6 +87,6 @@ class facebookController extends Controller
                     ];
             }
         }
-        return response()->json(['posts' => $structuredPosts]);
+        return response()->json(['posts' => $structuredPosts, 'posts_id' => $posts_id]);
     }
 }

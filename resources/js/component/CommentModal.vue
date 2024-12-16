@@ -12,9 +12,8 @@
           <div class="dots-menu" @click="toggleMenuComment(comment.id)">
             <span class="dot">...</span>
           </div>
-
           <!-- Delete of update-->
-          <div v-if="activeMenuComment === comment.id && $root.user[0].id == comment.user_id" class="comment-options">
+          <div v-if="activeMenuComment == comment.id && $root.user[0].id == comment.user_id" class="comment-options">
             <button @click="startEditComment(comment)" class="edit-btn">Edit</button>
             <button @click="confirmDeleteComment(comment)" class="delete-btn">Delete</button>
             <button @click="startReply(comment)" class="reply-btn">Reply</button>
@@ -157,6 +156,7 @@ export default {
               id: response.data.id,
               content: this.replyContent,
               user_name: this.currentUserName,
+              user_id: this.$root.user[0].id,
               created_at: new Date().toISOString()
             });
           }
@@ -266,12 +266,19 @@ export default {
           this.comments.unshift({
             id: response.data.id,
             content: this.commentContent,
-
             user_name: this.currentUserName,
+            user_id: this.$root.user[0].id,
             created_at: new Date().toISOString()
           });
+          if (this.activeMenuComment) {
+            this.activeMenuComment = null;
+          }
+          if (this.activeMenuReply) {
+            this.activeMenuReply = null;
+          }
           this.commentContent = '';
           this.$emit('comment-added', response.data);
+          console.log(this.comments);
         })
         .catch(error => {
           console.error('Error posting comment:', error);
@@ -365,7 +372,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: transparent ; 
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;

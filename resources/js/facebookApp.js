@@ -17,7 +17,8 @@ const app = createApp({
             user: null,
             current_posts: [],
             userId: window.userId,
-            profileUser: null,
+            profileUser: [],
+            current_posts_ids: [],
         };
     },
     methods: {},

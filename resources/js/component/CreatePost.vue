@@ -1,55 +1,33 @@
 <template>
-    <div
-        class="card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3"
-    >
+    <div class="card w-100 shadow-xss rounded-xxl border-0 ps-4 pt-4 pe-4 pb-3 mb-3">
         <div class="card-body p-0">
             <div class="loader-overlay" id="loaderOverlay">
                 <div class="loader"></div>
             </div>
-            <a
-                href="#"
-                @click.prevent="createPost()"
+            <a href="#" @click.prevent="createPost()"
                 class="font-xssss fw-600 text-grey-500 card-body p-0 d-flex align-items-center"
-                :disabled="content == ''"
-                ><i
-                    class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"
-                ></i
-                >Create Post</a
-            >
+                :disabled="content == ''"><i
+                    class="btn-round-sm font-xs text-primary feather-edit-3 me-2 bg-greylight"></i>Create Post</a>
         </div>
         <!-- user image ... -->
         <div class="card-body p-0 mt-3 position-relative">
             <figure class="avatar position-absolute ms-2 mt-1 top-5 menu-icon">
-                <img
-                    :src="
-                        '/storage/users/image/' +
-                        ($root.user[0].profile_picture ??
-                            'default121000000.jpg')
-                    "
-                    alt="image"
-                    class="shadow-sm rounded-circle w30"
-                />
+                <img :src="'/storage/users/image/' +
+                    ($root.user[0].profile_picture ??
+                        'default121000000.jpg')
+                    " alt="image" class="shadow-sm rounded-circle w30" />
             </figure>
-            <textarea
-                name="message"
+            <textarea name="message"
                 class="h100 bor-0 w-100 rounded-xxl p-2 ps-5 font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg"
-                cols="30"
-                rows="10"
-                placeholder="What's on your mind?"
-                v-model="content"
-            ></textarea>
+                cols="30" rows="10" placeholder="What's on your mind?" v-model="content"></textarea>
         </div>
         <div class="card-body d-flex p-0 mt-0">
             <!-- live video (out) -->
             <!-- <a href="#" class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4"><i
                     class="font-md text-danger feather-video me-2"></i><span class="d-none-xs">Live Video</span></a> -->
-            <a
-                href="#"
-                class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4"
-                @click.prevent="uploadMedia()"
-                ><i class="font-md text-success feather-image me-2"></i
-                ><span class="d-none-xs">Photo/Video</span></a
-            >
+            <a href="#" class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4"
+                @click.prevent="uploadMedia()"><i class="font-md text-success feather-image me-2"></i><span
+                    class="d-none-xs">Photo/Video</span></a>
             <!-- feeling activity... -->
             <!-- <a href="#" class="d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4"><i
                     class="font-md text-warning feather-camera me-2"></i><span
@@ -126,7 +104,7 @@ export default {
                         ).style.visibility = "hidden";
                     }, 1500);
                 })
-                .catch((error) => {});
+                .catch((error) => { });
         },
         uploadMedia() {
             // alert('hello from uploading ');
@@ -192,6 +170,7 @@ export default {
     height: 80px;
     animation: spin 2s linear infinite;
 }
+
 .menu-icon {
     height: 45px;
     width: 25px;
