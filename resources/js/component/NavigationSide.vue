@@ -1,4 +1,49 @@
 <template>
+    <div
+        class="modal fade"
+        id="followerModal"
+        tabindex="-1"
+        aria-labelledby="followerModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="followerModalLabel">
+                        Followers
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div
+                    class="modal-body"
+                    style="overflow-y: auto; max-height: 400px"
+                >
+                    <ul class="list-unstyled">
+                        <li v-if="followers.length === 0">No followers yet</li>
+                        <li
+                            class="reaction-item"
+                            v-for="user in followers"
+                            :key="user.id"
+                        >
+                            <img
+                                :src="
+                                    '/storage/users/image/' +
+                                    (user.profile_picture ??
+                                        'default121000000.jpg')
+                                "
+                            />
+                            {{ user.name }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <nav class="navigation scroll-bar">
         <div class="container ps-0 pe-0">
             <div class="nav-content">
@@ -12,7 +57,10 @@
                         <li class="logo d-none d-xl-block d-lg-block"></li>
                         <li>
                             <a
-                                href="default-group.html"
+                                @click="fetchFollowers($root.user[0].id)"
+                                data-bs-toggle="modal"
+                                data-bs-target="#followerModal"
+                                href="#"
                                 class="nav-content-bttn open-font"
                                 ><i
                                     class="feather-zap btn-round-md bg-mini-gradiant me-3"
@@ -20,8 +68,10 @@
                                 ><span>Follower List</span></a
                             >
                         </li>
+                        <!-- follower modal -->
                         <li>
-                            <a type="button"
+                            <a
+                                type="button"
                                 @click.prevent="$parent.goToMyProfile()"
                                 class="nav-content-bttn open-font"
                                 ><i
@@ -71,6 +121,56 @@
     </nav>
 </template>
 <script>
+import axios from "axios";
+
 export default {
+    data() {
+        return {
+            followers: [], // list of followers
+        };
+    },
+    methods: {
+        fetchFollowers(userId) {
+            axios
+                .post("/api/followers", { user_id: userId })
+                .then((response) => {
+                    this.followers = response.data.followers;
+                })
+                .catch((error) => {
+                    console.error("Error fetching followers:", error);
+                });
+        },
+    },
 };
 </script>
+<style scoped>
+.modal-content {
+    top: 80px;
+}
+
+.modal-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 9999;
+}
+.reaction-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.reaction-item img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.reaction-item span {
+    font-weight: bold;
+}
+</style>

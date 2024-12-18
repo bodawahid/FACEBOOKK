@@ -1,63 +1,147 @@
 <template>
     <!-- Modal Structure -->
-    <div v-if="$parent.isModalVisible" class="modal fade show" id="createPostModal" tabindex="-1"
-        aria-labelledby="createPostModalLabel" aria-hidden="true">
+    <div
+        v-if="$parent.isModalVisible"
+        class="modal fade show"
+        id="createPostModal"
+        tabindex="-1"
+        aria-labelledby="createPostModalLabel"
+        aria-hidden="true"
+    >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createPostModalLabel">Create Post</h5>
-                    <button type="button" class="btn-close" @click="closeModal"></button>
+                    <h5 class="modal-title" id="createPostModalLabel">
+                        Create Post
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        @click="closeModal"
+                    ></button>
                 </div>
                 <div class="modal-body">
                     <form @submit.prevent="submitPost">
                         <!-- File input for photos/videos -->
                         <div class="mb-3">
-                            <label for="media" class="form-label">Create Post</label>
+                            <label for="media" class="form-label"
+                                >Create Post</label
+                            >
                         </div>
 
                         <!-- Caption input -->
                         <div class="mb-3">
                             <!-- <label for="caption" class="form-label">Caption</label> -->
-                            <textarea id="caption" v-model="caption" class="form-control" rows="3"
-                                placeholder="Enter a caption..." style="scrollbar-width: none;"></textarea>
+                            <textarea
+                                id="caption"
+                                v-model="caption"
+                                class="form-control"
+                                rows="3"
+                                placeholder="Enter a caption..."
+                                style="scrollbar-width: none"
+                            ></textarea>
                         </div>
 
                         <!-- Preview Section -->
                         <div v-if="$parent.mediaFiles.length" class="mb-3">
-                            <div class="media-grid" :class="{
-                                'media-one': $parent.mediaFiles.length === 1,
-                                'media-two': $parent.mediaFiles.length === 2,
-                                'media-three': $parent.mediaFiles.length === 3,
-                                'media-four': $parent.mediaFiles.length >= 4,
-                            }">
-                                <div v-for="(file, index) in $parent.mediaFiles" :key="index">
-                                    <div v-if="file.file.type.includes('image/') && index < 4" class="media-item">
-                                        <img :src="file.url" alt="Image Preview" class="img-thumbnail"
-                                            style="width: 100%;height: 100%;">
-                                        <div class="overlay" v-if="index == 3 && $parent.mediaFiles.length > 4">
-                                            <span class="remaining-text">{{ '+ ' + remainingCount() }}</span>
+                            <div
+                                class="media-grid"
+                                :class="{
+                                    'media-one':
+                                        $parent.mediaFiles.length === 1,
+                                    'media-two':
+                                        $parent.mediaFiles.length === 2,
+                                    'media-three':
+                                        $parent.mediaFiles.length === 3,
+                                    'media-four':
+                                        $parent.mediaFiles.length >= 4,
+                                }"
+                            >
+                                <div
+                                    v-for="(file, index) in $parent.mediaFiles"
+                                    :key="index"
+                                >
+                                    <div
+                                        v-if="
+                                            file.file.type.includes('image/') &&
+                                            index < 4
+                                        "
+                                        class="media-item"
+                                    >
+                                        <img
+                                            :src="file.url"
+                                            alt="Image Preview"
+                                            class="img-thumbnail"
+                                            style="width: 100%; height: 100%"
+                                        />
+                                        <div
+                                            class="overlay"
+                                            v-if="
+                                                index == 3 &&
+                                                $parent.mediaFiles.length > 4
+                                            "
+                                        >
+                                            <span class="remaining-text">{{
+                                                "+ " + remainingCount()
+                                            }}</span>
                                         </div>
                                     </div>
-                                    <div v-else-if="file.file.type.includes('video/') && index < 4" class="media-item">
-                                        <video :src="file.url" controls class="img-thumbnail"
-                                            style="width: 100%; height: 100%;"></video>
-                                        <div class="overlay" v-if="index == 3 && $parent.mediaFiles.length > 4">
-                                            <span class="remaining-text">{{ '+ ' + remainingCount() }}</span>
+                                    <div
+                                        v-else-if="
+                                            file.file.type.includes('video/') &&
+                                            index < 4
+                                        "
+                                        class="media-item"
+                                    >
+                                        <video
+                                            :src="file.url"
+                                            controls
+                                            class="img-thumbnail"
+                                            style="width: 100%; height: 100%"
+                                        ></video>
+                                        <div
+                                            class="overlay"
+                                            v-if="
+                                                index == 3 &&
+                                                $parent.mediaFiles.length > 4
+                                            "
+                                        >
+                                            <span class="remaining-text">{{
+                                                "+ " + remainingCount()
+                                            }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div v-if="isLoading" class="d-flex justify-content-center my-3">
-                            <div class="spinner-border text-primary" role="status">
+                        <div
+                            v-if="isLoading"
+                            class="d-flex justify-content-center my-3"
+                        >
+                            <div
+                                class="spinner-border text-primary"
+                                role="status"
+                            >
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
                         <!-- Submit Button -->
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" @click="closeModal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" :disabled="isLoading == true">Post</button>
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                @click="closeModal"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                                :disabled="isLoading == true"
+                            >
+                                Post
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -67,14 +151,14 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
     data() {
         return {
-            isModalVisible: false,    // Control modal visibility
-            caption: '',              // The caption text
-            selectedFiles: [],        // Array to store selected files (images or videos)
+            isModalVisible: false, // Control modal visibility
+            caption: "", // The caption text
+            selectedFiles: [], // Array to store selected files (images or videos)
             isLoading: false,
         };
     },
@@ -86,7 +170,7 @@ export default {
         // Closing modal
         closeModal() {
             this.$parent.isModalVisible = false;
-            this.caption = '';       // Reset the caption
+            this.caption = ""; // Reset the caption
             this.$parent.mediaFiles = []; // Clear the selected files
         },
         // submitting post
@@ -94,30 +178,32 @@ export default {
             this.isLoading = true;
             const formData = new FormData();
 
-            if (this.caption)
-                formData.append('content', this.caption);
+            if (this.caption) formData.append("content", this.caption);
 
             this.$parent.mediaFiles.forEach((file, index) => {
                 formData.append(`media[${index}]`, file.file);
             });
-            formData.append('content_type', "attachement");
+            formData.append("content_type", "attachement");
             // Send form data to backend (use Axios or fetch)
-            axios.post('/api/create/post', formData)
+            axios
+                .post("/api/create/post", formData)
                 .then((response) => {
-                    console.log('Post created successfully', response);
-                    this.loading = false;
+                    this.isLoading = false;
                     this.closeModal(); // Close the modal after successful submission
-                    document.getElementById("loaderOverlay").style.visibility = "visible";
+                    document.getElementById("loaderOverlay").style.visibility =
+                        "visible";
                     this.$root.current_posts = [];
                     setTimeout(() => {
-                        this.caption = '';
+                        this.caption = "";
                         this.$root.current_posts = response.data.posts;
                         // this.$parent.spinner = false;
-                        document.getElementById("loaderOverlay").style.visibility = "hidden";
+                        document.getElementById(
+                            "loaderOverlay"
+                        ).style.visibility = "hidden";
                     }, 1500);
                 })
                 .catch((error) => {
-                    console.error('Error creating post', error);
+                    console.error("Error creating post", error);
                 });
         },
     },

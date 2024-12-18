@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reacts', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
             $table->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->enum('react_type', ['like', 'haha', 'love', 'wow', 'sad'])->default('like');
             $table->timestamps();
+            $table->primary('post_id','user_id');
         });
     }
 

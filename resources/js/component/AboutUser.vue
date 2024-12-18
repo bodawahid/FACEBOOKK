@@ -35,7 +35,7 @@
                 Joined At &nbsp;
             </h4>
             <span class="d-block font-xssss fw-500 mt-1 lh-3 text-grey-500">{{
-                timeAgo($root.profileUser[0].created_at_)
+                timeAgo($root.profileUser[0].created_at)
             }}</span>
         </div>
     </div>
