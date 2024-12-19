@@ -15,7 +15,7 @@ class UserController extends Controller
     public function currentUserData()
     {
         $userId = Auth::id();
-        $user = DB::select('select bio , country , cover_picture , users.created_at created_at_ ,email , users.id , name, profile_picture from users left join profiles on users.id = profiles.user_id where users.id = ?', [$userId]);
+        $user = DB::select('select bio , country , cover_picture , users.created_at created_at_ ,email , users.id , name, profile_picture from users join profiles on users.id = profiles.user_id where users.id = ?', [$userId]);
         return response()->json(['user' => $user]);
     }
     public function getUserPosts(Request $request)
@@ -23,10 +23,8 @@ class UserController extends Controller
         $request->validate([
             'user_id' => ['required', 'numeric', 'exists:users,id']
         ]);
-        $profile_user_data = DB::select('select user_id as userID , name , profile_picture , cover_picture , email , bio from users u join profiles p on u.id = p.user_id where u.id = ?', [$request->user_id]);
-        // get user information .
-        // $user = Auth::user();
-        // getting latest posts ,
+        $profile_user_data = DB::select('select user_id as userID , name , u.created_at , profile_picture , cover_picture , email , bio from users u join profiles p on u.id = p.user_id where u.id = ?', [$request->user_id]);
+
         $posts = DB::select('select p.id post_id , p.content post_content , p.created_at , p.updated_at , pm.id pm_id, pm.media_path media_path ,
             pm.media_type, users.name ,  profiles.profile_picture , pm2.media_path SharedPostMediaPath , pm2.media_type SharedPostMediaType,
             prof1.profile_picture SharedPostUserProfilePicture , p.post_id SharedPostId ,
